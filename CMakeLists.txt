@@ -39,7 +39,7 @@ include(GNUInstallDirs)
 option(PNG_BUILD_ZLIB "Custom zlib Location, else find_package is used" OFF)
 
 if(NOT PNG_BUILD_ZLIB)
-  find_package(ZLIB REQUIRED)
+  find_package(ZLIB QUIET)
   include_directories(${ZLIB_INCLUDE_DIR})
 endif()
 
@@ -51,9 +51,9 @@ else()
 endif()
 
 # COMMAND LINE OPTIONS
-option(PNG_SHARED "Build shared lib" ON)
+option(PNG_SHARED "Build shared lib" OFF)
 option(PNG_STATIC "Build static lib" ON)
-option(PNG_TESTS  "Build libpng tests" ON)
+option(PNG_TESTS  "Build libpng tests" OFF)
 
 # Many more configuration options could be added here
 option(PNG_FRAMEWORK "Build OS X framework" OFF)
@@ -844,6 +844,7 @@ if(PNG_SHARED)
     CLEAN_DIRECT_OUTPUT 1)
 endif()
 
+option(SKIP_INSTALL_ALL "Skip install" ON)
 # INSTALL
 if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
   install(TARGETS ${PNG_LIB_TARGETS}
